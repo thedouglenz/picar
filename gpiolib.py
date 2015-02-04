@@ -30,8 +30,8 @@ def cleanup():
     """De-assign functions to all the pins"""
     gpio.cleanup()
 
-def trigger(pin):
+def trigger(pins):
     """Send a +3V signal across the given pin"""
-    gpio.output(pin, gpio.HIGH)
+    gpio.output(pins, gpio.HIGH)
 
 
