@@ -34,4 +34,8 @@ def trigger(pins):
     """Send a +3V signal across the given pin"""
     gpio.output(pins, gpio.HIGH)
 
+def send_low(pin):
+    gpio.output(pin, 0)
 
+def is_on(pin):
+    return gpio.input(pin)
