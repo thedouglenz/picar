@@ -35,7 +35,7 @@ def trigger(pins):
     gpio.output(pins, gpio.HIGH)
 
 def send_low(pin):
-    gpio.output(pin, 0)
+    gpio.output(pin, gpio.LOW)
 
 def is_on(pin):
     return gpio.input(pin)
