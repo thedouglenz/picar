@@ -5,13 +5,14 @@ from gpiolib import *
 
 import curses
 
-OUTPIN = 7
+OUTPINS = [7, 26]
 
 stdscr = None
 
 def setup_pins():
     init()
-    set_pin_out(OUTPIN)
+    for i in OUTPINS:
+	set_pin_out(i)
 
 def setup_curses():
     global stdscr
@@ -42,7 +43,7 @@ def main():
 
     try:
 	while True:
-	    on = is_on(OUTPIN)
+	    on = is_on(OUTPINS[0])
 	    if(on):
 		stdscr.addstr(20, 20, "Light is ON ")
 	    else:
@@ -56,9 +57,9 @@ def main():
 	    if c == ord('q'): # pressing q will exit
 		break
 	    if c == curses.KEY_UP: # KEY_UP should turn the light on
-		trigger(OUTPIN)
+		trigger(OUTPINS)
 	    if c == curses.KEY_DOWN:
-		send_low(OUTPIN)
+		send_low(OUTPINS)
 
     except KeyboardInterrupt:
 	print "Exiting..."
