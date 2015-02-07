@@ -6,7 +6,7 @@ import carfunc as car
 # Start Flask server + init flask_sockets.Socket
 app = Flask(__name__)
 app.config['DEBUG'] = True
-sockets = Scokets(app)
+sockets = Sockets(app)
 
 # Flask
 @app.route('/')
