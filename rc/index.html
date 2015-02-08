@@ -4,29 +4,34 @@
 <html>
     <head>
 	<title> Raspberry Pi Remote Control Car Controller </title>
-	<style>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
+	<link rel="stylesheet" href="vendor/pure-release-0.5.0/pure-min-css">
+	<style> <!-- TODO: Move these styles to an external file; Style the user page some more-->
 	    #output-area ul {
 		list-style-type: none;
 	    }
 	    #output-area li {
-		font: 18px Helvetica, Arial;
-		color: Blue;
+		font: 22px Helvetica, Arial;
+		color: #313131;
 	    }
 	    p a {
 		text-decoration: none;
-		color: #313131;
+		color: #000;
 	    }
 	</style>
     </head>
 
     <body>
-	<h3> Rpi RC Car Controller </h3>
-	<div id="output-area">
-	    <ul>
-		<li id="show-alph"></li>
-		<li id="show-beta"></li>
-		<li id="show-gamm"></li>
-	    </ul>
+	<div class="pure-g">
+	    <div class="pure-u-1">
+		<h2> Rpi RC Car Controller </h2>
+	    </div>
+	    <div id="output-area" class="pure-u-1">
+		<ul>
+		    <li id="show-beta"></li>
+		    <li id="show-gamm"></li>
+		</ul>
+	    </div>
 	</div>
 	<script src="vendor/jquery-2.1.3.min.js" language="javascript"></script>
 	<script src="/socket.io/socket.io.js"></script>
@@ -35,15 +40,15 @@
 	    var beta = 0;
 	    var gamma  = 0;
 	    var ready;
-	    var li_alpha = $("#show-alph");
 	    var li_beta = $("#show-beta");
 	    var li_gamma = $("#show-gamm");
 
 	    var socket = io.connect(window.location.hostname + ':3000');
 
 	    var orient = function(event) {
-		alpha = event.alpha; // motion of device around z-axis (0, 360)
-		beta = event.beta; // motion of device around x-axis (-180, 180)
+		// Don't need alpha
+		// alpha = event.alpha; // motion of device around z-axis (0, 360)
+		betat = event.beta; // motion of device around x-axis (-180, 180)
 		gammat = event.gamma; // motion of device around y-axis (-90, 90)
 
 		if(gammat > 45) {
@@ -53,8 +58,8 @@
 		}
 
 		gamma = 0.01 * ( 90 - (-1 * gammat) );
+		beta = betat;
 
-		li_alpha.html("x: " + alpha);
 		li_beta.html("y: " + beta);
 		li_gamma.html("z: " + gamma);	
 	    };
