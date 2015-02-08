@@ -1,0 +1,81 @@
+<!-- Client side app for raspberry pi remote controlled car -->
+<!-- Douglas Lenz, 2015 -->
+<!doctype html>
+<html>
+    <head>
+	<title> Raspberry Pi Remote Control Car Controller </title>
+	<style>
+	    #output-area ul {
+		list-style-type: none;
+	    }
+	    #output-area li {
+		font: 18px Helvetica, Arial;
+		color: Blue;
+	    }
+	    p a {
+		text-decoration: none;
+		color: #313131;
+	    }
+	</style>
+    </head>
+
+    <body>
+	<h3> Rpi RC Car Controller </h3>
+	<div id="output-area">
+	    <ul>
+		<li id="show-alph"></li>
+		<li id="show-beta"></li>
+		<li id="show-gamm"></li>
+	    </ul>
+	</div>
+	<script src="vendor/jquery-2.1.3.min.js" language="javascript"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript">
+	    var alpha = 0;
+	    var beta = 0;
+	    var gamma  = 0;
+	    var ready;
+	    var li_alpha = $("#show-alph");
+	    var li_beta = $("#show-beta");
+	    var li_gamma = $("#show-gamm");
+
+	    var socket = io.connect(window.location.hostname + ':3000');
+
+	    var orient = function(event) {
+		alpha = event.alpha; // motion of device around z-axis (0, 360)
+		beta = event.beta; // motion of device around x-axis (-180, 180)
+		gammat = event.gamma; // motion of device around y-axis (-90, 90)
+
+		if(gammat > 45) {
+		    gammat = -90;
+		} else if (gammat > 0) {
+		    gammat = 0;
+		}
+
+		gamma = 0.01 * ( 90 - (-1 * gammat) );
+
+		li_alpha.html("x: " + alpha);
+		li_beta.html("y: " + beta);
+		li_gamma.html("z: " + gamma);	
+	    };
+
+	    var update = function() {
+		if(ready) {
+		    ready = false;
+		    socket.emit('update', { beta: beta, gamma: gamma });
+		    console.log("Sent: " + { beta: beta, gamma: gamma }); 
+		    ready = true;
+		}
+	    }
+
+	    $(document).ready(function() {
+		$("#output-area").append($("<p>").html("<a href='https://twitter.com/douglnz'>@douglnz</a>"));
+		ready = true;
+		window.addEventListener('deviceorientation', orient, true);
+		nextInterval = setInterval(update, 50);
+	    });
+	</script>
+    </body>
+
+</html>
+

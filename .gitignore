@@ -1,7 +1,9 @@
 *.pyc
 *~
+*.swp
 test.py
 __init__.py
 rc/venv/
 rc/node_modules/
 rc/vendor/
+rc/cleanup.sh
