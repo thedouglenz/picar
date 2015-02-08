@@ -7,3 +7,4 @@ rc/venv/
 rc/node_modules/
 rc/vendor/
 rc/cleanup.sh
+rc/npm-debug.log
