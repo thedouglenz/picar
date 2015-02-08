@@ -1,0 +1,12 @@
+{
+  "name": "node-picar",
+  "version": "0.0.1",
+  "description": "node app for a rpi car",
+  "dependencies": {
+    "express": "^4.10.2",
+    "minimist": "^1.1.0",
+    "node-static": "^0.7.6",
+    "pi-blaster.js": "0.0.2",
+    "socket.io": "^1.3.3"
+  }
+}
