@@ -16,6 +16,7 @@ var beforeDie = function() {
 }
 
 app.use('/vendor', express.static(__dirname + '/vendor'));
+app.use('/static', express.static(__dirname + '/static'));
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -23,6 +24,10 @@ app.get('/', function(req, res) {
 io.on('connection', function(socket) {
     socket.on('update', function(data) {
 	piblaster.setPwm(4, data.gamma);
+	piblaster.setPwm(17, data.beta);
+    });
+    socket.on('headlights', function(data) {
+	piblaster.setPwm(18, data.value);
     });
     socket.on('disconnect', beforeDie);
 });
